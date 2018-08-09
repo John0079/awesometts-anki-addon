@@ -892,7 +892,7 @@ if not anki.version.startswith("2.0."):
 	cache_control()     # automatically clear the media cache regularly
 	#cards_button()      # on-the-fly templater helper in card view
 	config_menu()       # provides access to configuration dialog
-	#editor_button()     # single audio clip generator button
+	editor_button()     # single audio clip generator button
 	reviewer_hooks()    # on-the-fly playback/shortcuts, context menus
 	sound_tag_delays()  # delayed playing of stored [sound]s in review
 	temp_files()        # remove temporary files upon session exit
