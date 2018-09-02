@@ -555,6 +555,8 @@ class BrowserGenerator(ServiceDialog):
                 ]
 
         else:
+            from aqt.utils import showInfo
+            self._alerts = showInfo
             messages.append("there were no errors.")
 
         if proc['aborted']:
