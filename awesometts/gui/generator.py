@@ -725,6 +725,15 @@ class EditorGenerator(ServiceDialog):
         Focus the text area after displaying the dialog.
         """
 
+        # try to get selected text or field text
+        def callback(fieldText):
+            self._show(fieldText, *args, **kwargs)
+
+        self._editor.web.evalWithCallback("""\
+(currentField && window.getSelection().getRangeAt(0).collapsed) ? currentField.innerHTML : null;
+""", callback)
+
+    def _show(self, fieldText, *args, **kwargs):
         super(EditorGenerator, self).show(*args, **kwargs)
 
         text = self.findChild(QtWidgets.QTextEdit, 'text')
@@ -741,14 +750,7 @@ class EditorGenerator(ServiceDialog):
             return from_unknown(app.clipboard().text(subtype)[0])
 
         for origin in [
-                lambda: from_note(web.selectedText()),
-                lambda: from_note(web.page().mainFrame().evaluateJavaScript(
-                    # for jQuery, this needs to be html() instead of text() as
-                    # $('<div>hi<br>there</div>').text() yields "hithere"
-                    # whereas if we have the original HTML, we can convert the
-                    # line break tag into whitespace during input sanitization
-                    '$("#f%d").html()' % editor.currentField
-                )),
+                lambda: fieldText,
                 lambda: try_clipboard('html'),
                 lambda: try_clipboard('text'),
         ]:
