@@ -29,6 +29,17 @@ import shutil
 import sys
 import subprocess
 
+# fixme: this should be converted to use the requests library instead
+from urllib.request import urlopen
+import ssl
+_ssl_orig_context = ssl._create_default_https_context
+def urlopenNoVerify(*args, **kwargs):
+    ssl._create_default_https_context = ssl._create_unverified_context
+    try:
+        return urlopen(*args, **kwargs)
+    finally:
+        ssl._create_default_https_context = _ssl_orig_context
+
 __all__ = ['Service']
 
 
@@ -485,7 +496,7 @@ class Service(object, metaclass=abc.ABCMeta):
         self._logger.debug("GET %s for headers", url)
         self._netops += 1
         from urllib.request import urlopen, Request
-        return urlopen(
+        return urlopenNoVerify(
             Request(url=url, headers={'User-Agent': DEFAULT_UA}),
             timeout=DEFAULT_TIMEOUT,
         ).headers
@@ -568,7 +579,7 @@ class Service(object, metaclass=abc.ABCMeta):
                 headers.update(custom_headers)
 
             self._netops += 1
-            response = urlopen(
+            response = urlopenNoVerify(
                 Request(
                     url=('?'.join([url, params]) if params and method == 'GET'
                          else url),
