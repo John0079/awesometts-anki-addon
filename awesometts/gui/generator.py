@@ -25,6 +25,7 @@ from PyQt5 import QtCore, QtWidgets
 
 from .base import Dialog, ServiceDialog
 from .common import Checkbox, Label, Note
+from anki.utils import htmlToTextLine
 
 __all__ = ['BrowserGenerator', 'EditorGenerator']
 
@@ -727,6 +728,8 @@ class EditorGenerator(ServiceDialog):
 
         # try to get selected text or field text
         def callback(fieldText):
+            if fieldText:
+                fieldText = htmlToTextLine(fieldText)
             self._show(fieldText, *args, **kwargs)
 
         self._editor.web.evalWithCallback("""\
