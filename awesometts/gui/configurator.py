@@ -73,6 +73,7 @@ class Configurator(Dialog):
         self._group_editor = None
         self._sul_compiler = sul_compiler
 
+        # Title of the configuration dialog can be changed here
         super(Configurator, self).__init__(title="Configuration",
                                            *args, **kwargs)
 

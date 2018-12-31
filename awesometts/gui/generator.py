@@ -356,9 +356,8 @@ class BrowserGenerator(ServiceDialog):
 
             proc['counts']['fail'] += 1
 
-            message = exception.message
-            if isinstance(message, str):
-                message = self._RE_WHITESPACE.sub(' ', message).strip()
+            message = str(exception)
+            message = self._RE_WHITESPACE.sub(' ', message).strip()
 
             try:
                 proc['exceptions'][message] += 1

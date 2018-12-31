@@ -88,6 +88,15 @@ logger = Bundle(debug=lambda *a, **k: None, error=lambda *a, **k: None,
 # import logging as logger
 # logger.basicConfig(stream=sys.stdout, level=logger.DEBUG)
 
+
+# This will write all addon logs to a file.
+# import logging
+# logger = logging.getLogger('awesometts')
+# logger.setLevel(logging.DEBUG)
+# debug_fh = logging.FileHandler('C:\\Users\\Administrator\\awesometts.log')
+# debug_fh.setLevel(logging.DEBUG)
+# logger.addHandler(debug_fh)
+
 sequences = {key: QKeySequence()
              for key in ['browser_generator', 'browser_stripper',
                          'configurator', 'editor_generator', 'templater']}

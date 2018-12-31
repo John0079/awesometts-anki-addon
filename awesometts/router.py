@@ -385,6 +385,9 @@ class Router(object):
         self._call_assert_callbacks(callbacks)
 
         try:
+            # TODO: a ValueError without any message is being thrown in this try block
+            # https://anki.tenderapp.com/discussions/add-ons/24212-anki-crashes-due-to-awesome-tts
+            
             self._logger.debug("Call for '%s' w/ %s", svc_id, options)
 
             if not text:
