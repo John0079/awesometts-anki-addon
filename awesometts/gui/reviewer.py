@@ -343,7 +343,7 @@ class Reviewer(object):
                          else "Unable to play this tag:\n%s\n\n%s")
                         % (
                             tag.prettify().strip(),
-                            exception.message,
+                            exception.message if hasattr(exception, 'message') else str(exception)
                         ),
                         parent,
                     )
