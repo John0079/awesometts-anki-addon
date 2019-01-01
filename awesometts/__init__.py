@@ -899,7 +899,7 @@ if not anki.version.startswith("2.0."):
 
 	browser_menus()     # mass generator and MP3 stripper
 	cache_control()     # automatically clear the media cache regularly
-	#cards_button()      # on-the-fly templater helper in card view
+	cards_button()      # on-the-fly templater helper in card view
 	config_menu()       # provides access to configuration dialog
 	editor_button()     # single audio clip generator button
 	reviewer_hooks()    # on-the-fly playback/shortcuts, context menus
