@@ -773,8 +773,7 @@ class Configurator(Dialog):
                 done=lambda: button.setEnabled(True),
                 fail=lambda exception: state.setText("Check failed: %s" % (
                     (
-                        exception.message if hasattr(exception, 'message')
-                        else str(exception)
+                        str(exception)
                     ) or
                     "Nothing further known"
                 )),

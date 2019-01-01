@@ -787,7 +787,7 @@ class EditorGenerator(ServiceDialog):
             ),
             fail=lambda exception: (
                 self._alerts("Cannot record the input phrase with these "
-                             "settings.\n\n%s" % exception.message, self),
+                             "settings.\n\n%s" % str(exception), self),
                 text_input.setFocus(),
             ),
         )
