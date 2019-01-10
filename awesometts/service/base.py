@@ -574,7 +574,9 @@ class Service(object, metaclass=abc.ABCMeta):
             if method == 'GET':
                 response = client.get(('?'.join([url, params]) if params else url), headers)
             else:
-                response = client.post(url, params if params else None, headers)
+                from io import BytesIO
+                # note that this method of AnkiRequestsClient must take IO streams, not strings
+                response = client.post(url, BytesIO((params if params else '').encode()), headers)
 
             if not response:
                 raise IOError("No response for %s" % desc)
