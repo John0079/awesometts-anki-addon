@@ -572,9 +572,12 @@ class Service(object, metaclass=abc.ABCMeta):
             self._netops += 1
 
             if method == 'GET':
-                response = client.get(('?'.join([url, params]) if params else url), headers)
+                request_url = ('?'.join([url, params]) if params else url)
+                self._logger.debug('request made: ' + repr((method, request_url, headers)))
+                response = client.get(request_url, headers)
             else:
                 from io import BytesIO
+                self._logger.debug('request made: ' + repr((method, url, headers, (params if params else ''))))
                 # note that this method of AnkiRequestsClient must take IO streams, not strings
                 response = client.post(url, BytesIO((params if params else '').encode()), headers)
 
