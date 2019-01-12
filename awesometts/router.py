@@ -380,7 +380,7 @@ class Router(object):
                 text='test',
                 options=options,
                 callbacks=callbacks,
-                async=False
+                async_variable=False
             )
         outputln('FAILED SERVICES: ' + repr(failed_services))
         outputln('Testing completed')
