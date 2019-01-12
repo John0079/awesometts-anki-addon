@@ -480,14 +480,14 @@ class Service(object, metaclass=abc.ABCMeta):
         import atexit
         atexit.register(service.terminate)
 
-    def net_headers(self, url):
+    def net_headers(self, url, headers=None):
         """Returns the headers for a URL."""
 
         self._logger.debug("GET %s for headers", url)
         self._netops += 1
         
         client = AnkiRequestsClient()
-        response = client.get(url)
+        response = client.get(url, headers=headers)
 
         return response.headers
 
