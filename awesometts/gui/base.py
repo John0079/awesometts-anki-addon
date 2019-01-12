@@ -213,8 +213,8 @@ class ServiceDialog(Dialog):
     """
 
     # For testing purposes.
-    _DEBUG_ENABLED = False
-    # _DEBUG_OUTPUT_FILE_PATH = 'C:/Users/Administrator/awesometts-interface/debug-output.txt'
+    _DEBUG_ENABLED = True
+    _DEBUG_OUTPUT_FILE_PATH = 'C:/Users/Administrator/awesometts-interface/debug-output.txt'
 
     _OPTIONS_WIDGETS = (QtWidgets.QComboBox, QtWidgets.QAbstractSpinBox)
 

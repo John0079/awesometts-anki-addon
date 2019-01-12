@@ -90,12 +90,12 @@ logger = Bundle(debug=lambda *a, **k: None, error=lambda *a, **k: None,
 
 
 # This will write all addon logs to a file.
-# import logging
-# logger = logging.getLogger('awesometts')
-# logger.setLevel(logging.DEBUG)
-# debug_fh = logging.FileHandler('C:/Users/Administrator/awesometts-interface/awesometts-log.txt')
-# debug_fh.setLevel(logging.DEBUG)
-# logger.addHandler(debug_fh)
+import logging
+logger = logging.getLogger('awesometts')
+logger.setLevel(logging.DEBUG)
+debug_fh = logging.FileHandler('C:/Users/Administrator/awesometts-interface/awesometts-log.txt')
+debug_fh.setLevel(logging.DEBUG)
+logger.addHandler(debug_fh)
 
 sequences = {key: QKeySequence()
              for key in ['browser_generator', 'browser_stripper',
