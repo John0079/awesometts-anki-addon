@@ -486,8 +486,22 @@ class Service(object, metaclass=abc.ABCMeta):
         self._logger.debug("GET %s for headers", url)
         self._netops += 1
         
-        client = AnkiRequestsClient()
-        response = client.get(url, headers=headers)
+        #client = AnkiRequestsClient()
+        #response = client.get(url)
+
+        import requests
+
+        request_url = url
+        self._logger.debug('request made: ' + repr(('GET HEADERS', request_url, headers)))
+        #response = client.get(request_url, headers)
+        request = requests.Request('GET', request_url, headers=headers)
+
+
+
+        prepared_request = request.prepare()
+        self._logger.debug('request made with headers: ' + ('\n'.join('{}: {}'.format(k, v) for k, v in prepared_request.headers.items())))
+        session = requests.Session()
+        response = session.send(prepared_request)
 
         return response.headers
 
@@ -555,7 +569,7 @@ class Service(object, metaclass=abc.ABCMeta):
 
         payloads = []
 
-        client = AnkiRequestsClient()
+        # client = AnkiRequestsClient()
 
         for number, (url, params) in enumerate(targets, 1):
             desc = "web request" if len(targets) == 1 \
@@ -571,15 +585,24 @@ class Service(object, metaclass=abc.ABCMeta):
 
             self._netops += 1
 
+            import requests
+
             if method == 'GET':
                 request_url = ('?'.join([url, params]) if params else url)
                 self._logger.debug('request made: ' + repr((method, request_url, headers)))
-                response = client.get(request_url, headers)
+                #response = client.get(request_url, headers)
+                request = requests.Request(method, request_url, headers=headers)
             else:
-                from io import BytesIO
+                # from io import BytesIO
                 self._logger.debug('request made: ' + repr((method, url, headers, (params if params else ''))))
-                # note that this method of AnkiRequestsClient must take IO streams, not strings
-                response = client.post(url, BytesIO((params if params else '').encode()), headers)
+                request = requests.Request(method, url, headers=headers, data=(params if params else ''))
+                # # note that this method of AnkiRequestsClient must take IO streams, not strings
+                #response = client.post(url, BytesIO((params if params else '').encode()), headers)
+
+            prepared_request = request.prepare()
+            self._logger.debug('request made with headers: ' + ('\n'.join('{}: {}'.format(k, v) for k, v in prepared_request.headers.items())))
+            session = requests.Session()
+            response = session.send(prepared_request)
 
             if not response:
                 raise IOError("No response for %s" % desc)
